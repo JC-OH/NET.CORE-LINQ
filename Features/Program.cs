@@ -18,6 +18,8 @@ namespace Features
                 new Employee { Id = 3, Name = "Alex" }
             };
 
+            Console.WriteLine(sales.Count());
+
             foreach (var person in developers)
             {
                 Console.WriteLine(person.Name);
