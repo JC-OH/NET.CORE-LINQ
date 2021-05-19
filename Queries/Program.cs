@@ -28,6 +28,15 @@ namespace Queries
             {
                 Console.WriteLine(movie.Title);
             }
+
+            Console.WriteLine("====================================================");
+            var query3 = movies.Filter(m => m.Year > 2000)
+                                .Take(1);
+            var enumerator = query3.GetEnumerator();
+            while (enumerator.MoveNext())
+            {
+                Console.WriteLine(enumerator.Current.Title);
+            }
         }
     }
 }
