@@ -15,6 +15,18 @@ namespace Queries
                 new Movie { Title = "Casablanca",        Rating = 8.5f, Year = 1942 },
                 new Movie { Title = "Star Wars V",       Rating = 8.7f, Year = 1980 }
             };
+            Console.WriteLine("====================================================");
+            var emptyQuery = Enumerable.Empty<Movie>();
+
+            /*try
+            {
+                emptyQuery = movies.Where(m => m.Year > 2000).ToList();
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            Console.WriteLine(emptyQuery.Count());*/
 
             var query = movies.Where(m => m.Year > 2000);
 
