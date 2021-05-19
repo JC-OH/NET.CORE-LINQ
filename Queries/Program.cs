@@ -8,6 +8,11 @@ namespace Queries
     {
         static void Main(string[] args)
         {
+            var numbers = MyLinq.Random().Where(n => n > 0.5).Take(10).OrderBy(n => n);
+            foreach (var number in numbers)
+            {
+                Console.WriteLine(number);
+            }
             var movies = new List<Movie>
             {
                 new Movie { Title = "The Dark Knight",   Rating = 8.9f, Year = 2008 },
@@ -57,6 +62,13 @@ namespace Queries
             Console.WriteLine("====================================================");
             var query4 = movies.Where(m => m.Year > 2000)
                             .OrderByDescending(m => m.Rating);
+            Console.WriteLine("====================================================");
+
+            var query5 = from movie in movies
+                         where movie.Year > 2000
+                         orderby movie.Rating descending
+                         select movie;
+
 
         }
     }
