@@ -30,13 +30,19 @@ namespace Queries
             }
 
             Console.WriteLine("====================================================");
-            var query3 = movies.Filter(m => m.Year > 2000)
-                                .Take(1);
+            /*var query3 = movies.Filter(m => m.Year > 2000)
+                                .Take(1);*/
+            /*var query3 = movies.Filter(m => m.Year > 2000);
+            Console.WriteLine(query3.Count());*/
+
+            var query3 = movies.Filter(m => m.Year > 2000).ToList();
+            Console.WriteLine(query3.Count());
             var enumerator = query3.GetEnumerator();
             while (enumerator.MoveNext())
             {
                 Console.WriteLine(enumerator.Current.Title);
             }
+
         }
     }
 }
