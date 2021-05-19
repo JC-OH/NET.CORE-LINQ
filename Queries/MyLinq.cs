@@ -9,7 +9,7 @@ namespace Queries
         public static IEnumerable<T> Filter<T>(this IEnumerable<T> source, 
                                                     Func<T, bool> predicate)
         {
-            var result = new List<T>();
+            /*var result = new List<T>();
 
             foreach (var item in source)
             {
@@ -19,16 +19,16 @@ namespace Queries
                 }
             }
 
-            return result;
+            return result;*/
+            foreach (var item in source)
+            {
+                if (predicate(item))
+                {
+                    yield return item;
+                }
+            }
         }
     }
 }
 
 
-/*foreach (var item in source)
-{
-    if (predicate(item))
-    {
-        yield return item;
-    }
-}*/
