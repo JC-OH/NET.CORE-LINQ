@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Features
 {
@@ -50,6 +51,34 @@ namespace Features
             {
                 Console.WriteLine(enumerator.Current.Name);
             }
+
+            Console.WriteLine("[Where - Named Method]=====================================");
+            foreach (var employee in developers.Where(NameStartsWithS))
+            {
+                Console.WriteLine(employee.Name.ToString());
+            }
+
+            Console.WriteLine("[Where - Anonymous Method]=====================================");
+            foreach (var employee in developers.Where(
+                    delegate(Employee employee) {
+                        return employee.Name.StartsWith("S");
+                    }))
+            {
+                Console.WriteLine(employee.Name.ToString());
+            }
+
+            Console.WriteLine("[Where - Lambda Express]=====================================");
+            foreach (var employee in developers.Where(e => e.Name.StartsWith("S")))
+            {
+                Console.WriteLine(employee.Name.ToString());
+            }
+
+
+        }
+
+        private static bool NameStartsWithS(Employee employee)
+        {
+            return employee.Name.StartsWith("S");
         }
     }
 }
