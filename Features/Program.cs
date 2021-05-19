@@ -86,7 +86,24 @@ namespace Features
                 Console.WriteLine(employee.Name.ToString());
             }
 
+            var query = developers.Where(e => e.Name.Length == 5)
+                      .OrderBy(e => e.Name)
+                      .Select(e => e);
 
+            foreach (var employee in query)
+            {
+                Console.WriteLine(employee.Name);
+            }
+
+            var query2 = from developer in developers
+                         where developer.Name.Length == 5
+                         orderby developer.Name
+                         select developer;
+
+            foreach (var employee in query2)
+            {
+                Console.WriteLine(employee.Name);
+            }
         }
 
         private static bool NameStartsWithS(Employee employee)
