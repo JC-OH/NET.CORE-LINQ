@@ -54,6 +54,9 @@ namespace Queries
             {
                 Console.WriteLine(enumerator.Current.Title);
             }
+            Console.WriteLine("====================================================");
+            var query4 = movies.Where(m => m.Year > 2000)
+                            .OrderByDescending(m => m.Rating);
 
         }
     }
