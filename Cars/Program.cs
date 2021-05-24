@@ -22,8 +22,47 @@ namespace Cars
 
             Console.WriteLine("=======================================");
             var query1 = from car in cars
+                         where car.Manufacturer == "BMW" && car.Year == 2016
                          orderby car.Combined descending, car.Name ascending
                          select car;
+
+            var query2 =
+                    cars.Where(c => c.Manufacturer == "BMW" && c.Year == 2016)
+                    .OrderByDescending(c => c.Combined)
+                    .ThenBy(c => c.Name)
+                    .Select(c => c)
+                    .First();
+
+            var query3 =
+                    cars
+                    .OrderByDescending(c => c.Combined)
+                    .ThenBy(c => c.Name)
+                    .Select(c => c)
+                    .First(c => c.Manufacturer == "BMW" && c.Year == 2016);
+
+            var query4 = (from car in cars
+                         where car.Manufacturer == "BMW" && car.Year == 2016
+                         orderby car.Combined descending, car.Name ascending
+                         select car).First();
+
+            var query5 =
+                    cars
+                    .OrderByDescending(c => c.Combined)
+                    .ThenBy(c => c.Name)
+                    .Select(c => c)
+                    .Last(c => c.Manufacturer == "BMW" && c.Year == 2016);
+
+            var top =
+                    cars
+                    .OrderByDescending(c => c.Combined)
+                    .ThenBy(c => c.Name)
+                    .Select(c => c)
+                    .FirstOrDefault();
+            if (top != null)
+            {
+                Console.WriteLine(top.Name);
+            }
+
             foreach (var car in query1.Take(10))
             {
                 Console.WriteLine($"{car.Name} : {car.Combined}");            
