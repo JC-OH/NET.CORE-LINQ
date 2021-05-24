@@ -10,9 +10,29 @@ namespace Cars
         static void Main(string[] args)
         {
             var cars = ProcessFile("fuel.csv");
-            foreach (var car in cars)
+
+            var query = cars.OrderByDescending(c => c.Combined)
+                            .ThenBy(c => c.Name);
+
+            foreach (var car in query.Take(10))
             {
-                Console.WriteLine(car.Name);
+                //Console.WriteLine(car.Name);
+                Console.WriteLine($"{car.Name} : {car.Combined}");
+            }
+
+            Console.WriteLine("=======================================");
+            var query1 = from car in cars
+                         orderby car.Combined descending, car.Name ascending
+                         select car;
+            foreach (var car in query1.Take(10))
+            {
+                Console.WriteLine($"{car.Name} : {car.Combined}");            
+            }
+
+            Console.WriteLine("=======================================");
+            foreach (var car in query1.Take(10).Reverse())
+            {
+                Console.WriteLine($"{car.Name} : {car.Combined}");
             }
         }
 
