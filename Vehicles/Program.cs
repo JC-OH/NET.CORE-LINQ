@@ -95,6 +95,40 @@ namespace Vehicles
                             })
                       .OrderByDescending(c => c.Combined)
                       .ThenBy(c => c.Name);
+            Console.WriteLine("========================================");
+            var query6 =
+                    from car in cars
+                    group car by car.Manufacturer;
+            foreach (var result in query6)
+            {
+                //Console.WriteLine(result.Key);
+                Console.WriteLine($"{result.Key} has {result.Count()} cars.");
+            }
+            Console.WriteLine("========================================");
+            var query7 =
+                    from car in cars
+                    group car by car.Manufacturer.ToUpper();
+
+            foreach (var group in query7)
+            {
+                Console.WriteLine($"{group.Key} has {group.Count()} cars.");
+                foreach (var car in group.OrderByDescending(c => c.Combined).Take(2))
+                {
+                    Console.WriteLine($"\t{car.Name} : {car.Combined}");
+                }
+            }
+
+            Console.WriteLine("========================================");
+            var query8 =
+                    from car in cars
+                    group car by car.Manufacturer.ToUpper() into manufacturer
+                    orderby manufacturer.Key
+                    select manufacturer;
+
+            Console.WriteLine("========================================");
+            var query9 =
+                    cars.GroupBy(c => c.Manufacturer.ToUpper())
+                        .OrderBy(g => g.Key);
         }
 
         private static List<Manufacturer> ProcessManufacturers(string path)
