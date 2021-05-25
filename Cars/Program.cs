@@ -73,6 +73,12 @@ namespace Cars
             {
                 Console.WriteLine($"{car.Name} : {car.Combined}");
             }
+            Console.WriteLine("=======================================");
+            var result = cars.Any();
+
+            var result1 = cars.Any(c => c.Manufacturer == "Ford");
+            var result2 = cars.All(c => c.Manufacturer == "Ford");
+
         }
 
         private static List<Car> ProcessFile(string path)
