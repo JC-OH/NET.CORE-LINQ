@@ -78,6 +78,35 @@ namespace Cars
 
             var result1 = cars.Any(c => c.Manufacturer == "Ford");
             var result2 = cars.All(c => c.Manufacturer == "Ford");
+            Console.WriteLine("=======================================");
+            var anno = from car in cars
+                         where car.Manufacturer == "BMW" && car.Year == 2016
+                         orderby car.Combined descending, car.Name ascending
+                         select new { 
+                            car.Manufacturer,
+                            car.Name,
+                            car.Combined
+                         };
+
+            Console.WriteLine("=======================================");
+
+            var result3 = anno.Select(c => c.Name);
+
+            foreach (var name in result3)
+            {
+                foreach (var character in name)
+                {
+                    Console.WriteLine(character);
+                }
+            }
+
+            Console.WriteLine("=======================================");
+            var result4 = anno.SelectMany(c => c.Name);
+
+            foreach (var character in result4)
+            {
+                Console.WriteLine(character);
+            }
 
         }
 
