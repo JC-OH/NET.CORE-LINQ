@@ -29,6 +29,72 @@ namespace Vehicles
             {
                 Console.WriteLine($"{car.Headquarters} {car.Name} : {car.Combined}");
             };
+
+            Console.WriteLine("========================================");
+
+            var query2 =
+                cars.Join(manufacturers,
+                            c => c.Manufacturer,
+                            m => m.Name,
+                            (c, m) => new
+                            {
+
+                                m.Headquarters,
+                                c.Name,
+                                c.Combined
+                            })
+                      .OrderByDescending(c => c.Combined)
+                      .ThenBy(c => c.Name);
+
+            Console.WriteLine("========================================");
+            var query3 =
+                cars.Join(manufacturers,
+                            c => c.Manufacturer,
+                            m => m.Name,
+                            (c, m) => new
+                            {
+                                Car = c,
+                                Manufacturer = m
+                            })
+                      .OrderByDescending(c => c.Car.Combined)
+                      .ThenBy(c => c.Car.Name)
+                      .Select(c => new
+                      {
+                          c.Manufacturer.Headquarters,
+                          c.Car.Name,
+                          c.Car.Combined
+                      });
+
+            Console.WriteLine("========================================");
+            var query4 =
+                    from car in cars
+                    join manufacturer in manufacturers
+                        on  new { car.Manufacturer, car.Year } 
+                            equals 
+                            new { Manufacturer = manufacturer.Name, manufacturer.Year }
+                    //where car.Manufacturer == "BMW" && car.Year == 2016
+                    orderby car.Combined descending, car.Name ascending
+                    select new
+                    {
+                        manufacturer.Headquarters,
+                        car.Name,
+                        car.Combined
+                    };
+            Console.WriteLine("========================================");
+
+            var query5 =
+                cars.Join(manufacturers,
+                            c => new { c.Manufacturer, c.Year },
+                            m => new { Manufacturer = m.Name, m.Year },
+                            (c, m) => new
+                            {
+
+                                m.Headquarters,
+                                c.Name,
+                                c.Combined
+                            })
+                      .OrderByDescending(c => c.Combined)
+                      .ThenBy(c => c.Name);
         }
 
         private static List<Manufacturer> ProcessManufacturers(string path)
