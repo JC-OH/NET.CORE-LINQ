@@ -186,6 +186,37 @@ namespace Vehicles
                     Console.WriteLine($"\t{car.Name} : {car.Combined}");
                 }
             }
+            Console.WriteLine("========================================");
+            var query13 =
+                from car in cars
+                group car by car.Manufacturer into carGroup
+                select new
+                {
+                    Name = carGroup.Key,
+                    Max = carGroup.Max(c => c.Combined),
+                    Min = carGroup.Min(c => c.Combined),
+                    Avg = carGroup.Average(c => c.Combined)
+                };
+            var query14 =
+                from car in cars
+                group car by car.Manufacturer into carGroup
+                select new
+                {
+                    Name = carGroup.Key,
+                    Max = carGroup.Max(c => c.Combined),
+                    Min = carGroup.Min(c => c.Combined),
+                    Avg = carGroup.Average(c => c.Combined)
+                } into result
+                orderby result.Max descending
+                select result;
+
+            foreach (var result in query13)
+            {
+                Console.WriteLine($"{result.Name}");
+                Console.WriteLine($"\t Max: {result.Max}");
+                Console.WriteLine($"\t Min: {result.Min}");
+                Console.WriteLine($"\t Avg: {result.Avg}");
+            }
         }
 
         private static List<Manufacturer> ProcessManufacturers(string path)
