@@ -129,6 +129,63 @@ namespace Vehicles
             var query9 =
                     cars.GroupBy(c => c.Manufacturer.ToUpper())
                         .OrderBy(g => g.Key);
+
+
+            Console.WriteLine("========================================");
+            var query10 =
+                     from manufacturer in manufacturers
+                     join car in cars on manufacturer.Name equals car.Manufacturer
+                     into carGroup
+                     select new
+                     {
+                         Manufacturer = manufacturer,
+                         Cars = carGroup
+                     };
+            
+            foreach (var group in query10)
+            {
+                Console.WriteLine($"{group.Manufacturer.Name}: {group.Manufacturer.Headquarters}");
+                foreach (var car in group.Cars.OrderByDescending(c => c.Combined).Take(2))
+                {
+                    Console.WriteLine($"\t{car.Name} : {car.Combined}");
+                }
+            }
+
+            Console.WriteLine("========================================");
+            var query11 =
+                    manufacturers.GroupJoin(cars, m => m.Name, c => c.Manufacturer,
+                        (m, g) =>
+                        new 
+                        {
+                            Manufacturer = m,
+                            Cars = g
+                        })
+                    .OrderBy(m => m.Manufacturer.Headquarters);
+
+
+
+            Console.WriteLine("========================================");
+            var query12 =
+                    from manufacturer in manufacturers
+                    join car in cars on manufacturer.Name equals car.Manufacturer
+                        into carGroup
+                    select new
+                    {
+                        Manufacturer = manufacturer,
+                        Cars = carGroup
+                    } into result
+                    group result by result.Manufacturer.Headquarters;
+
+            foreach (var group in query12)
+            {
+                Console.WriteLine($"{group.Key}");
+                foreach (var car in group.SelectMany(g => g.Cars)
+                                        .OrderByDescending(c => c.Combined)
+                                        .Take(3))
+                {
+                    Console.WriteLine($"\t{car.Name} : {car.Combined}");
+                }
+            }
         }
 
         private static List<Manufacturer> ProcessManufacturers(string path)
