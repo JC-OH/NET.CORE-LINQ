@@ -44,10 +44,10 @@ namespace XML
                 var combined = new XAttribute("Combined", record.Combined);
                 var car = new XElement("Car", name, combined);*/
 
-                var car = new XElement("Car", 
-                                        new XAttribute("Name", record.Name), 
+                var car = new XElement("Car",
+                                        new XAttribute("Name", record.Name),
                                         new XAttribute("Combined", record.Combined),
-                                        new XAttribute("Manufacterer", record.Manufacturer)
+                                        new XAttribute("Manufacturer", record.Manufacturer)
                                        );
 
                 cars.Add(car);
@@ -55,7 +55,36 @@ namespace XML
             document.Add(cars);
             document.Save("fuel2.xml");
             //==================================================================
-            document = new XDocument();
+            Console.WriteLine("[CreateXml]================================================");
+            CreateXml(records);
+            Console.WriteLine("[QueryXml]================================================");
+            QueryXml();
+        }
+
+        private static void QueryXml()
+        {
+            var document = XDocument.Load("fuel3.xml");
+
+            var query =
+                    from element in document.Element("Cars").Elements("Car")
+                    //where element.Attribute("Manufacturer").Value == "BMW"
+                    where element.Attribute("Manufacturer")?.Value == "BMW"
+                    select element.Attribute("Name").Value;
+
+            var query1 =
+                    from element in document.Descendants("Car")
+                    where element.Attribute("Manufacturer")?.Value == "BMW"
+                    select element.Attribute("Name").Value;
+
+            foreach (var name in query)
+            {
+                Console.WriteLine(name);
+            }
+        }
+
+        private static void CreateXml(List<Car> records)
+        {
+            var document = new XDocument();
             /*cars = new XElement("Cars");
             var elements =
                     from record in records
@@ -66,17 +95,15 @@ namespace XML
                                        );
             cars.Add(elements);*/
 
-            cars = new XElement("Cars", 
+            var cars = new XElement("Cars",
                 from record in records
                 select new XElement("Car",
                                     new XAttribute("Name", record.Name),
                                     new XAttribute("Combined", record.Combined),
-                                    new XAttribute("Manufacterer", record.Manufacturer)
+                                    new XAttribute("Manufacturer", record.Manufacturer)
                                     ));
             document.Add(cars);
             document.Save("fuel3.xml");
-
-
         }
 
         private static List<Car> ProcessCars(string path)
