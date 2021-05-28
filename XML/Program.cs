@@ -59,6 +59,12 @@ namespace XML
             CreateXml(records);
             Console.WriteLine("[QueryXml]================================================");
             QueryXml();
+            Console.WriteLine("[CreateXmlWithNameSpace]================================================");
+            //==================================================================
+            CreateXmlWithNameSpace(records);
+            //==================================================================
+            Console.WriteLine("[QueryXmlWithNameSpace]================================================");
+            QueryXmlWithNameSpace();
         }
 
         private static void QueryXml()
@@ -105,7 +111,46 @@ namespace XML
             document.Add(cars);
             document.Save("fuel3.xml");
         }
+        private static void CreateXmlWithNameSpace(List<Car> records)
+        {
+            var document = new XDocument();
+            
+            //XNamespace ns = "http://pluralsight.com/cars/20216";
+            var ns = (XNamespace)"http://pluralsight.com/cars/20216";
+            var ex = (XNamespace)"http://pluralsight.com/cars/20216/ex";
 
+            var cars = new XElement(ns + "Cars",
+                from record in records
+                select new XElement(ex + "Car",
+                                    new XAttribute("Name", record.Name),
+                                    new XAttribute("Combined", record.Combined),
+                                    new XAttribute("Manufacturer", record.Manufacturer)
+                                    ));
+            cars.Add(new XAttribute(XNamespace.Xmlns + "ex", ex));
+
+            document.Add(cars);
+            document.Save("fuel4.xml");
+        }
+        private static void QueryXmlWithNameSpace()
+        {
+
+            var document = XDocument.Load("fuel4.xml");
+
+            var ns = (XNamespace)"http://pluralsight.com/cars/20216";
+            var ex = (XNamespace)"http://pluralsight.com/cars/20216/ex";
+
+            var query =
+                    from element in document.Element(ns + "Cars")?.Elements(ex + "Car") 
+                                                ?? Enumerable.Empty<XElement>()
+                        //where element.Attribute("Manufacturer").Value == "BMW"
+                    where element.Attribute("Manufacturer")?.Value == "BMW"
+                    select element.Attribute("Name").Value;
+
+            foreach (var name in query)
+            {
+                Console.WriteLine(name);
+            }
+        }
         private static List<Car> ProcessCars(string path)
         {
             var query =
