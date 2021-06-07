@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XML", "XML\XML.csproj", "{C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework", "EntityFramework\EntityFramework.csproj", "{5C1B67E1-8EDF-4BB5-BC83-0BFA7414E870}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkCore", "EntityFrameworkCore\EntityFrameworkCore.csproj", "{AC71CDB8-7830-4365-A6FA-5F7482C56867}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EntityFrameworkCore", "EntityFrameworkCore\EntityFrameworkCore.csproj", "{AC71CDB8-7830-4365-A6FA-5F7482C56867}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DependencyInjection", "DependencyInjection\DependencyInjection.csproj", "{05CDD05F-EA91-4913-A8D2-9AE9811663FB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{AC71CDB8-7830-4365-A6FA-5F7482C56867}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC71CDB8-7830-4365-A6FA-5F7482C56867}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC71CDB8-7830-4365-A6FA-5F7482C56867}.Release|Any CPU.Build.0 = Release|Any CPU
+		{05CDD05F-EA91-4913-A8D2-9AE9811663FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{05CDD05F-EA91-4913-A8D2-9AE9811663FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{05CDD05F-EA91-4913-A8D2-9AE9811663FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{05CDD05F-EA91-4913-A8D2-9AE9811663FB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
